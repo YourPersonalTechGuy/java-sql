@@ -37,6 +37,9 @@ Reimport the Northwind database into PostgreSQL using pgAdmin. This is the same 
   </details>
 
 ```SQL
+  select *
+  from customers
+  where city = 'London';
 
 ```
 
@@ -48,6 +51,9 @@ Reimport the Northwind database into PostgreSQL using pgAdmin. This is the same 
   </details>
 
 ```SQL
+  select *
+  from customers
+  where postal_code = '1010'
 
 ```
 
@@ -59,6 +65,9 @@ Reimport the Northwind database into PostgreSQL using pgAdmin. This is the same 
   </details>
 
 ```SQL
+  select phone
+  from suppliers
+  where supplier_id = '11'
 
 ```
 
@@ -70,6 +79,9 @@ Reimport the Northwind database into PostgreSQL using pgAdmin. This is the same 
   </details>
 
 ```SQL
+  select *
+  from orders
+  order by order_date desc
 
 ```
 
@@ -82,6 +94,9 @@ Reimport the Northwind database into PostgreSQL using pgAdmin. This is the same 
   </details>
 
 ```SQL
+  select *
+  from suppliers
+  where length(company_name) > 20;
 
 ```
 
@@ -95,6 +110,9 @@ Reimport the Northwind database into PostgreSQL using pgAdmin. This is the same 
   </details>
 
 ```SQL
+  select *
+  from customers
+  where contact_title like '%Market%'
 
 ```
 
@@ -112,6 +130,8 @@ Reimport the Northwind database into PostgreSQL using pgAdmin. This is the same 
   </details>
 
 ```SQL
+  insert into customers (customer_id, company_name, contact_name, address, city, postal_code, country)
+  values('Shire', 'The Shire', 'Bilbo Baggins', '1 Hobbit-Hole', 'Bag End', '111', 'Middle Earth');
 
 ```
 
@@ -123,6 +143,9 @@ Reimport the Northwind database into PostgreSQL using pgAdmin. This is the same 
   </details>
 
 ```SQL
+  update customers
+  set postal_code='11122'
+  where customer_id = 'Shire';
 
 ```
 
@@ -135,6 +158,10 @@ Reimport the Northwind database into PostgreSQL using pgAdmin. This is the same 
   </details>
 
 ```SQL
+  select count(orders.customer_id), customers.company_name
+  from orders
+  join customers on orders.customer_id = customers.customer_id
+  group by customers.company_name;
 
 ```
 
@@ -146,6 +173,11 @@ Reimport the Northwind database into PostgreSQL using pgAdmin. This is the same 
   </details>
 
 ```SQL
+  select count(orders.customer_id), customers.contact_name
+  from orders
+  join customers on orders.customer_id = customers.customer_id
+  group by customers.contact_name
+  order by count(orders.customer_id) desc;
 
 ```
 
@@ -157,6 +189,10 @@ Reimport the Northwind database into PostgreSQL using pgAdmin. This is the same 
   </details>
 
 ```SQL
+  select count(orders.customer_id), orders.ship_city
+  from orders
+  group by orders.ship_city
+  order by orders.ship_city desc;
 
 ```
 
@@ -177,29 +213,29 @@ Below are some empty tables to be used to normalize the database
 * Not all of the cells will contain data in the final solution
 * Feel free to edit these tables as necessary
 
+Table Name: Persons
+
+| Person ID  | Person Name|Fenced Yard |City Dweller|            |            |            |            |            |
+|------------|------------|------------|------------|------------|------------|------------|------------|------------|
+|     1      |   Jane     |    No      |    Yes     |            |            |            |            |            |
+|     2      |   Bob      |    No      |    No      |            |            |            |            |            |
+|     3      |   Sam      |    Yes     |    No      |            |            |            |            |            |
+|            |            |            |            |            |            |            |            |            |
+|            |            |            |            |            |            |            |            |            |
+|            |            |            |            |            |            |            |            |            |
+|            |            |            |            |            |            |            |            |            |
+
 Table Name:
 
-|            |            |            |            |            |            |            |            |            |
+|  Pet ID    | Person ID  |  Pet Name  |  Pet Type  |            |            |            |            |            |
 |------------|------------|------------|------------|------------|------------|------------|------------|------------|
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
-
-Table Name:
-
-|            |            |            |            |            |            |            |            |            |
-|------------|------------|------------|------------|------------|------------|------------|------------|------------|
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
-|            |            |            |            |            |            |            |            |            |
+|     1      |     1      | Ellie      |   Dog      |            |            |            |            |            |
+|     2      |     2      | Joe        |   Horse    |            |            |            |            |            |
+|     3      |     3      | Ginger     |   Dog      |            |            |            |            |            |
+|     4      |     1      | Tiger      |   Cat      |            |            |            |            |            |
+|     5      |     3      | Miss Kitty |   Cat      |            |            |            |            |            |
+|     6      |     1      | Toby       |   Turtle   |            |            |            |            |            |
+|     7      |     3      | Bubble     |   Fish     |            |            |            |            |            |
 
 Table Name:
 
